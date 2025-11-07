@@ -1,0 +1,21 @@
+# Ignore files not needed in Railway deployment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.env
+.venv
+mlruns/
+notebooks/
+.dvc/
+*.ipynb
+.git/
+.gitignore
+
