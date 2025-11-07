@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Credit Card Fraud Detection System with MLOps Integration
 
 ---
@@ -129,3 +130,6 @@ curl -X POST http://127.0.0.1:5000/predict \
 - [ ] **Deploy on Cloud**
 
 ---
+=======
+# creditCardFraudDetection
+>>>>>>> 46bd288b729527fb1f20190998ee75890ad76772

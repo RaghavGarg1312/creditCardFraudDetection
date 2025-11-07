@@ -1,30 +1,40 @@
-# Use an official Python 3.12 runtime as the base image
-FROM python:3.12-slim
+# Multi-stage build to reduce image size
+FROM python:3.12-slim as builder
 
-# Install system dependencies for h5py and other Python packages
-RUN apt-get update || true \
-    && apt-get install -y apt-transport-https ca-certificates \
-    && apt-get update \
-    && apt-get install -y \
-    libhdf5-dev \
-    pkg-config \
-    build-essential \
-    && apt-get clean
+# Install build dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the requirements file into the container
-COPY requirements.txt .
+# Copy and install Python dependencies
+COPY requirements-prod.txt .
+RUN pip install --no-cache-dir --user -r requirements-prod.txt
 
-# Install the necessary dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Final stage - minimal runtime image
+FROM python:3.12-slim
 
-# Copy the rest of the application code into the container
-COPY . .
+# Set working directory
+WORKDIR /app
 
-# Expose port (Railway will automatically use PORT env var)
+# Copy only installed packages from builder
+COPY --from=builder /root/.local /root/.local
+
+# Copy application code (only what's needed)
+COPY app.py .
+COPY src/ ./src/
+COPY models/ ./models/
+COPY templates/ ./templates/
+COPY static/ ./static/
+
+# Make sure scripts in .local are usable
+ENV PATH=/root/.local/bin:$PATH
+
+# Expose port
 EXPOSE 8080
 
-# Command to run the Flask app
+# Run the app
 CMD ["python", "app.py"]

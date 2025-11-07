@@ -1,13 +1,66 @@
 # Ignore virtual environments
-venv
-__pycache__
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
 
-# Ignore data, models, and logs
-logs
-mlruns
+# Ignore data files (not needed in production)
+data/
+*.csv
+*.dvc
 
-# Ignore notebooks (since they are not needed in production)
-notebooks
+# Ignore development files
+notebooks/
+*.ipynb
+.ipynb_checkpoints/
 
-# Ignore DVC files if not needed in production
-.dvc
+# Ignore logs and MLflow
+logs/
+mlruns/
+**/mlruns/
+
+# Ignore DVC files
+.dvc/
+.dvcignore
+
+# Ignore development tools
+.git/
+.gitignore
+.github/
+*.md
+!README.md
+
+# Ignore test files
+tests/
+test_*.py
+*_test.py
+
+# Ignore documentation
+docs/
+*.md
+!README.md
+
+# Ignore CI/CD configs (not needed in container)
+.github/
+.gitlab-ci.yml
+Jenkinsfile
+
+# Ignore environment files
+.env
+.env.local
+.env.*.local
+
+# Ignore build artifacts
+build/
+dist/
+*.egg-info/
+
+# Ignore Railway config (not needed in container)
+railway.json
+.railwayignore
+RAILWAY_DEPLOYMENT.md
+Procfile
+
+# Note: Dockerfile and requirements-prod.txt are needed for build

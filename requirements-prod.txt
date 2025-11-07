@@ -1,0 +1,13 @@
+# Production requirements - minimal dependencies for running the app
+pandas
+numpy
+scikit-learn
+xgboost
+imbalanced-learn
+openai
+langchain
+langchain-openai
+python-dotenv
+flask
+gunicorn
+
